@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#fff8fb">
+  <meta name="description" content="지젤린 Giselline 종합 안내 페이지">
+  <title>GISELLINE. | 지젤린 소개</title>
+  <style>
+    :root { --bg:#f1f1f1; --paper:#fff; --ink:#202020; --muted:#757575; --line:#e5e5e5; --card:#fafafa; --accent:#252525; --radius:19px; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic",sans-serif; color:var(--ink); background:repeating-linear-gradient(135deg,#efefef 0 18px,#f3f3f3 18px 36px); }
+    button, a { -webkit-tap-highlight-color:transparent; }
+    button { font:inherit; cursor:pointer; }
+    a { color:inherit; }
+    .app { margin:0 auto; max-width:480px; min-height:100dvh; background:var(--paper); position:relative; box-shadow:0 0 38px #0000000d; }
+    .topbar { position:sticky;top:0;z-index:20; padding:19px 22px 15px;background:#ffffffed;backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline;gap:10px; }
+    .brand { font:800 25px/1 Georgia,serif; letter-spacing:-.9px; }
+    .section-name { font-size:11px;font-weight:700;color:#666;letter-spacing:1.2px; }
+    main { padding:23px 18px calc(106px + env(safe-area-inset-bottom)); min-height:calc(100dvh - 65px); }
+    .page { display:none; animation:fade .2s ease; }
+    .page.active { display:block; }
+    @keyframes fade { from{opacity:.5;transform:translateY(3px)} to{opacity:1;transform:none} }
+    .card {border:1px solid #e2e2e2;border-radius:var(--radius); padding:19px; margin-bottom:14px; background:white; }
+    .card h2 {margin:0 0 14px;font-size:17px;display:flex;align-items:center;gap:9px;letter-spacing:-.5px;}
+    .card h2 .sym {font-size:19px;font-weight:400;}
+    .muted {color:var(--muted);}
+    .small {font-size:12px;line-height:1.65;}
+    .eyebrow {font-size:11px;font-weight:800;letter-spacing:1.4px;color:#777;}
+    .hero {border-radius:23px; overflow:hidden;position:relative; height:240px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(150deg,#f2f2f2,#fafafa 60%,#eaeaea);border:1px solid #e9e9e9; text-align:center; }
+    .hero:before,.hero:after{content:'✧';position:absolute;color:#b0b0b0;font-size:32px;}.hero:before{left:35px;top:45px}.hero:after{right:35px;bottom:45px}
+    .hero .hello {font:italic 28px Georgia,serif;margin:10px 0 8px;}
+    .hero .symbol {font-size:46px;line-height:1;}
+    .hero-sub {font-size:12px;color:#737373;}
+    .intro {padding:20px 6px 6px;}
+    .intro h1 {font-size:24px;line-height:1.35;margin:10px 0;letter-spacing:-1.2px;}
+    .intro p{line-height:1.8;color:#626262;font-size:13px;margin:0 0 14px;}
+    .stats {display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:15px 0 18px;}
+    .stat {background:#f8f8f8;border:1px solid #ededed;border-radius:14px;padding:16px;}
+    .stat strong{display:block;margin-top:5px;font-size:18px;}
+    .menu-cards {display:grid;gap:9px;}
+    .menu-card{width:100%;display:flex;align-items:center;gap:14px;text-align:left;background:white;border:1px solid var(--line);padding:15px;border-radius:15px;}
+    .menu-card:hover,.link-card:hover{background:#f6f6f6;}
+    .menu-card .num{font-weight:800;font-size:12px;color:#999;}
+    .menu-card b {display:block;font-size:14px;margin-bottom:4px;}
+    .menu-card small {color:#777;font-size:11px;}
+    .menu-card .arrow{margin-left:auto;color:#777;font-size:19px;}
+    .links {display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+    .link-card{display:flex;align-items:center;justify-content:space-between;text-decoration:none;border-radius:13px;border:1px solid var(--line);padding:13px;font-size:12px;font-weight:700;}
+    .link-card[aria-disabled=true]{color:#999;cursor:not-allowed;}
+    .profile-cover {display:flex;align-items:center;gap:15px;min-height:160px;padding:16px;border:1px solid var(--line);border-radius:19px;margin-bottom:14px;background:linear-gradient(120deg,#f3f3f3,#fff);}
+    .avatar-placeholder {width:125px;height:125px;flex:none;border-radius:17px;background:#e9e9e9;display:flex;align-items:center;justify-content:center;color:#aaa;position:relative;overflow:hidden;}
+    .avatar-placeholder svg{width:66px;height:66px;}
+    .profile-cover h1{font-size:28px;letter-spacing:-1px;margin:8px 0 1px;}
+    .profile-cover p{font-size:12px;line-height:1.7;color:#666;margin:8px 0 0;}
+    .data-table{display:grid;gap:0;border:1px solid #ededed;border-radius:13px;overflow:hidden;}
+    .data-row{display:grid;grid-template-columns:106px 1fr;border-bottom:1px solid #ececec;min-height:41px;align-items:stretch;font-size:12px;}
+    .data-row:last-child{border-bottom:none;}
+    .data-row .label{background:#f7f7f7;padding:12px 11px;font-weight:700;}
+    .data-row .value{padding:12px 10px;line-height:1.45;}
+    .chips{display:flex;flex-wrap:wrap;gap:7px;}
+    .chip{padding:7px 11px;border:1px solid #ddd;border-radius:100px;font-size:12px;background:#fcfcfc;}
+    .icon-items{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+    .icon-item{display:flex;align-items:center;flex-direction:column;gap:8px;text-align:center;font-size:11px;line-height:1.4;}
+    .icon-item .icon{height:45px;width:45px;border:1px solid #ececec;border-radius:100%;display:grid;place-items:center;font-size:22px;}
+    .body-list{padding-left:20px;margin:0;line-height:1.9;font-size:12px;}
+    .body-list li+li{margin-top:6px;}
+    .action-link{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;padding:15px;border-radius:14px;border:1px solid #e9e9e9;background:#f6f6f6;text-decoration:none;font-size:13px;font-weight:750;margin-top:13px;}
+    .action-link.disabled{opacity:.5;cursor:not-allowed;}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .two-col .card{padding:15px;}
+    .two-col h2{font-size:13px;}
+    .content-list{display:grid;gap:11px;}
+    .content-list div{font-size:12px;line-height:1.6;display:grid;grid-template-columns:86px 1fr;gap:8px;}
+    .content-list span{color:#777;}
+    details{border:1px solid #e8e8e8;border-radius:12px;overflow:hidden;margin-bottom:8px;}
+    summary{list-style:none;padding:13px 14px;font-size:12px;cursor:pointer;font-weight:650;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+    summary::-webkit-details-marker{display:none;}
+    summary:after{content:'⌄';font-size:18px;color:#777;}
+    details[open] summary:after{transform:rotate(180deg);}
+    details p{font-size:12px;line-height:1.7;color:#666;padding:0 14px 14px;margin:0;}
+    .gallery-head{display:flex;align-items:flex-end;justify-content:space-between;margin:1px 3px 16px;}
+    .gallery-head h1{font-size:24px;letter-spacing:-.7px;margin:0;}
+    .gallery-head span{font-size:11px;color:#777;}
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;}
+    .photo{padding:0;border:0;aspect-ratio:1/1;overflow:hidden;border-radius:10px;background:#ededed;position:relative;display:grid;place-items:center;color:#9c9c9c;}
+    .photo img {width:100%;height:100%;object-fit:cover;display:block;}
+    .photo svg{width:33px;height:33px;}
+    .photo:focus-visible{outline:3px solid #111;outline-offset:2px;}
+    .gallery-note {font-size:11px;color:#999;margin:15px 3px;}
+    .tabbar {position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:480px;width:100%;z-index:25;display:grid;grid-template-columns:repeat(4,1fr);padding:9px 11px calc(10px + env(safe-area-inset-bottom));background:#ffffffed;backdrop-filter:blur(15px);border-top:1px solid var(--line);box-shadow:0 -4px 18px #00000006;}
+    .tab {border:0;background:transparent;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;padding:8px 2px;border-radius:15px;color:#777;min-height:54px;font-size:10px;font-weight:600;}
+    .tab.active {background:#eeeeee;color:#161616;font-weight:800;}
+    .tab svg {width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+    .overlay{position:fixed;top:0;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:80;background:#111;display:none;flex-direction:column;color:#fff;overflow:hidden;}
+    .overlay.open{display:flex;}
+    body.viewer-open .tabbar{visibility:hidden;pointer-events:none;}
+    .viewer-header{display:flex;align-items:center;justify-content:space-between;padding:calc(14px + env(safe-area-inset-top)) 18px 12px;font-size:13px;}
+    .viewer-header button,.viewer-stage button{color:#fff;background:#ffffff20;border:0;border-radius:100%;width:39px;height:39px;font-size:22px;}
+    .viewer-stage{display:flex;align-items:center;justify-content:space-between;gap:8px;flex:1;min-height:0;padding:12px;touch-action:pan-y;}
+    .viewer-picture{flex:1;min-width:0;max-height:100%;height:70%;display:grid;place-items:center;background:#292929;border-radius:15px;overflow:hidden;}
+    .viewer-picture img{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;}
+    .viewer-picture svg{height:70px;width:70px;stroke:#777;}
+    .viewer-caption{text-align:center;min-height:80px;padding:15px 20px calc(22px + env(safe-area-inset-bottom));font-size:13px;}
+    .viewer-caption small{display:block;color:#999;margin-top:6px;}
+    .hidden{display:none!important;}
+    footer{font-size:10px;letter-spacing:.5px;text-align:center;color:#999;padding:32px 0 10px;}
+    @media(max-width:360px){main{padding-left:13px;padding-right:13px}.profile-cover{gap:10px}.avatar-placeholder{width:103px;height:117px}.data-row{grid-template-columns:90px 1fr}.two-col{grid-template-columns:1fr 1fr}.two-col .card{padding:11px}}
+    @media(min-width:700px){.app{margin:24px auto;min-height:calc(100dvh - 48px);border-radius:25px;overflow:clip;border:1px solid #e9e9e9}.tabbar{bottom:0;border-radius:18px 18px 0 0;}.overlay{top:24px;bottom:24px;border-radius:24px;}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important}}
+
+/* ===== GISELLINE PINKCORE DESIGN SYSTEM ===== */
+:root{--bg:#fff5f8;--paper:#fffcfd;--ink:#543649;--muted:#967a8b;--line:#efdbe4;--card:#fff8fb;--accent:#d6739e;--accent-strong:#b8507f;--radius:20px;}
+body{background:repeating-linear-gradient(135deg,#fff4f8 0 22px,#fdebf2 22px 23px,#fff8fa 23px 45px);color:var(--ink);}
+.app{background:#fffcfd;box-shadow:0 10px 55px #bf739423;}
+.topbar{background:#fffcfdf2;border-bottom:1px solid #f1dfe6;padding:20px 22px 17px;align-items:center;}
+.brand{font:italic 37px/1 'Times New Roman',Georgia,serif;letter-spacing:-2px;color:#d96a96;font-weight:400;}
+.brand-heart{font-size:21px;vertical-align:top;line-height:.8;margin-left:1px;}
+.section-name{color:#b77c99;font-size:10px;letter-spacing:1.35px;}
+main{padding:20px 17px calc(120px + env(safe-area-inset-bottom));}
+.card{background:linear-gradient(150deg,#fffefd,#fff9fc);border-color:#f1dfe6;box-shadow:0 4px 13px #b95c8510;padding:19px;}
+.card h2{color:#87506b;font-size:16px;}
+.card h2 .sym{color:#d4779f;}
+.eyebrow{color:#c185a2;letter-spacing:1.5px;}
+.hero{height:262px;background:radial-gradient(circle at 32% 25%,#fff 0%,transparent 35%),linear-gradient(135deg,#fae2ec,#ffeef5 57%,#f5d8e7);border:1px solid #f3d7e4;box-shadow:inset 0 0 0 6px #ffffff5c;}
+.hero:before{content:'♡';color:#dc88ae;font-size:40px;left:23px;top:25px;}.hero:after{content:'✧';color:#d988ac;right:28px;bottom:29px;}
+.hero .symbol{font-size:66px;color:#da7fa5;text-shadow:0 2px 0 #fff;line-height:1.1;}
+.hero .hello{font-size:39px;color:#a8507d;letter-spacing:-1.5px;}
+.hero-sub{color:#b07791;font-size:10px;letter-spacing:1.2px;font-weight:700;}
+.hero-decoration{position:absolute;color:#dda3bd;font-size:23px;}.hero-decoration-left{bottom:26px;left:25px}.hero-decoration-right{right:34px;top:24px}
+.intro h1{font-size:26px;color:#6f4058;}.intro p{color:#94778a;}
+.stat{background:#fff5f9;border-color:#f1dce6;border-radius:17px;}.stat strong{color:#8a4568;}.stat .eyebrow{font-size:10px;}
+.menu-card{border-color:#efdae4;background:#fffcfd;border-radius:16px;box-shadow:0 2px 9px #b95c8509;}
+.menu-card:hover,.link-card:hover{background:#fff0f6;border-color:#e5b5ca;}
+.menu-card .num{color:#d18baa}.menu-card .arrow{color:#cb8aa8}.menu-card small{color:#a78699;}
+.link-card{border-color:#f1dce6;background:#fff8fb;color:#925875;}.link-card span{color:#c88ca7;}
+.link-card[aria-disabled=true]{color:#ba9eab;}
+.profile-cover{min-height:180px;background:linear-gradient(130deg,#fce2ed,#fff9fc 80%);border-color:#f0d7e2;overflow:hidden;position:relative;}
+.profile-cover:after{content:'✧';position:absolute;right:19px;top:12px;color:#d991ae;font-size:27px;}
+.avatar-placeholder{border-radius:23px;background:linear-gradient(140deg,#f7c9dc,#fbe9f1);color:#cf85a5;border:3px solid #fff;box-shadow:0 4px 12px #b96d8e33;}
+.profile-cover h1{color:#9c4d77;font-size:29px;}.profile-cover p{color:#9c6c84;}
+.data-table{border-color:#efdde5;}.data-row{border-color:#f2e2e9;}.data-row .label{background:#fff2f7;color:#8a5973;}.data-row .value{color:#6f4b60;}
+.chip{border-color:#edcfdd;background:#fff5f9;color:#a65c80;}
+.icon-item .icon{border-color:#f1dce6;color:#bb6e93;background:#fff5f9;}
+.action-link{border-color:#f0cfde;background:linear-gradient(120deg,#fce2ec,#fff3f8);color:#a65780;}
+.two-col .card{background:#fff9fb;}
+.content-list span{color:#a38094;}
+details{border-color:#efdde6;background:#fffafb;}
+summary:after{color:#c283a1;}details p{color:#9b7a8d;}
+.gallery-head h1{color:#905071;}.gallery-head span{color:#b68ba0;}
+.photo{background:linear-gradient(135deg,#fae5ee,#f8eff3);border:1px solid #f3dce6;border-radius:11px;color:#ce9aaf;}
+.photo:nth-child(3n + 2){background:linear-gradient(140deg,#f9edf2,#efd5e2)}
+.photo:focus-visible{outline-color:#c7658f;}
+.gallery-note{color:#b391a4;}
+.tabbar{background:#fffcfdf4;border-top-color:#f0dce4;box-shadow:0 -5px 24px #d58eab15;}
+.tab{color:#b48ba0;}.tab.active{background:#fae6ef;color:#b45a85;}
+footer{color:#ba92a6;}
+.team-card{background:linear-gradient(140deg,#fff5f9,#fffdfd);border-color:#edcadc;}
+.team-card h2{margin-top:10px;flex-wrap:wrap;gap:6px;}.team-card .english{font-size:11px;color:#bb89a2;font-weight:500;}
+.team-facts{display:grid;gap:0;border:1px solid #f0deea;border-radius:12px;overflow:hidden;}
+.team-facts>div{display:flex;align-items:center;gap:15px;border-bottom:1px solid #f0deea;padding:11px 12px;font-size:12px;}
+.team-facts>div:last-child{border:0;}.team-facts span{width:72px;color:#a98198;}.team-facts strong{color:#86516d;font-weight:650;}
+.team-note{font-size:11px;color:#b17c98;line-height:1.7;margin:12px 0 0;}
+@media(min-width:700px){.app{border-color:#efdce5;}.overlay{box-shadow:0 6px 40px #95647e33}}
+.brand-logo {
+  width: 150px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* 홈페이지 준비중 화면 */
+#coming-soon {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 245, 250, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  /* 뒤쪽 홈페이지 클릭 방지 */
+  pointer-events: auto;
+}
+
+.coming-soon-text {
+  font-size: 42px;
+  font-weight: 900;
+  color: #ff408c;
+  letter-spacing: -2px;
+
+  -webkit-text-stroke: 1px #ff408c;
+  text-shadow:
+    2px 2px 0 white,
+    -2px -2px 0 white;
+}
+
+  </style>
+</head>
+<body>
+<div class="app" inert>
+  <header class="topbar">
+    <img
+      src="assets/giselline-logo.svg"
+      alt="Giselline"
+      class="brand-logo"
+    />
+    <span class="section-name" id="page-label">HOME</span>
+  </header>
+  <main>
+    <section class="page active" id="home" aria-labelledby="home-heading">
+      <div class="hero"><div class="hero-decoration hero-decoration-left">✦</div><div class="hero-decoration hero-decoration-right">♡</div><div class="symbol">♡</div><div class="hello">Hello, Gello!</div><div class="hero-sub">GISELLINE · PERSONAL GUIDE</div></div>
+      <div class="intro"><div class="eyebrow">WELCOME TO MY LITTLE WORLD</div><h1 id="home-heading">안녕하세요,<br>지젤린입니다.</h1><p>은하☆의 선택을 받아 등장한 핑크빛 마법소녀!<br>사주보고 게임하고 소소한 대화를 나누고 싶어요. ♡<br>˳₊‧˳⁺ ꒰ঌ (꒪ˊ꒳ˋ꒪) ໒꒱ ⁺˳‧₊˳</p></div>
+      <div class="stats"><div class="stat"><div class="eyebrow">DEBUT</div><strong>2026.10.03</strong></div><div class="stat"><div class="eyebrow">WITH GISELLINE</div><strong id="debut-counter">D+—</strong></div></div>
+      <div class="card"><h2><span class="sym">🪄</span> 조금 더 가까워지는 시간 ♡</h2><div class="menu-cards"><button class="menu-card" data-goto="profile"><span class="num">01</span><span><b>지젤린 알아보기</b><small>기본 정보 · 취향 · 세계관</small></span><span class="arrow">›</span></button><button class="menu-card" data-goto="stream"><span class="num">02</span><span><b>방송 안내</b><small>콘텐츠 · 규칙 · 방송 일정</small></span><span class="arrow">›</span></button><button class="menu-card" data-goto="gallery"><span class="num">03</span><span><b>사진첩 구경하기</b><small>의상 · 일러스트 · 기록</small></span><span class="arrow">›</span></button></div></div>
+      <div class="card"><h2><span class="sym">💘</span> 바로가기</h2><div class="links" id="social-links"></div></div>
+    </section>
+
+    <section class="page" id="profile" aria-labelledby="profile-heading">
+      <div class="profile-cover"><div class="avatar-placeholder" aria-label="프로필 이미지 자리"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><circle cx="32" cy="24" r="11"/><path d="M10 55c1-15 12-22 22-22s21 7 22 22"/></svg></div><div><div class="eyebrow">PROFILE ♡</div><h1 id="profile-heading">지젤린</h1><div class="muted" style="font:italic 15px Georgia,serif">Giselline</div><p>큐티발랄엉뚱<br>다채롭고 투명한 마법소녀 ♡</p></div></div>
+      <div class="card"><h2><span class="sym">🎀</span> 기본 정보</h2><div class="data-table"><div class="data-row"><span class="label">이름</span><span class="value">지젤린 (Giselline)</span></div><div class="data-row"><span class="label">생일</span><span class="value">3월 25일</span></div><div class="data-row"><span class="label">오시마크</span><span class="value">🩷🫧</span></div><div class="data-row"><span class="label">소속</span><span class="value">마이밀리밀키 (MyMilliMilky)</span></div><div class="data-row"><span class="label">개인 팬덤</span><span class="value">제로 (ZERO) ♡</span></div><div class="data-row"><span class="label">담당 컬러</span><span class="value">핑크 ♡</span></div><div class="data-row"><span class="label">대표 무기</span><span class="value">마법봉</span></div><div class="data-row"><span class="label">특기</span><span class="value">사주 보기 🔮 · 제로와 티키타카</span></div><div class="data-row"><span class="label">MBTI</span><span class="value">NNNN (N 100%)</span></div><div class="data-row"><span class="label">매력 포인트</span><span class="value">청순앙큼큐티</span></div><div class="data-row"><span class="label">반려동물</span><span class="value">까만 고먐미</span></div></div></div>
+      <div class="card"><h2><span class="sym">✨</span> 한 줄 소개</h2><p style="font-size:13px;line-height:1.9;text-align:center;margin:6px 0">“은하☆의 선택을 받아 등장한 핑크빛 마법소녀,<br>사주보고 게임하고 소소한 대화를 나누고 싶은  저는 지젤린이에요! ♡”</p></div>
+      <div class="card"><h2><span class="sym">😸</span> 키워드</h2><div class="chips"><span class="chip">#마법소녀</span><span class="chip">#사주보기</span><span class="chip">#갑자기상황극</span><span class="chip">#게임</span><span class="chip">#제로와떠들기</span><span class="chip">#청순앙큼큐티</span><span class="chip">#4차원</span></div></div>
+      <div class="card"><h2><span class="sym">🥰</span> 좋아하는 것</h2><div class="icon-items"><div class="icon-item"><span class="icon">🍓</span>과일먹기</div><div class="icon-item"><span class="icon">🐈‍⬛</span>고양이</div><div class="icon-item"><span class="icon">💗</span>리본&하트 코어</div><div class="icon-item"><span class="icon">💬</span>제로와 놀기</div></div></div>
+      <div class="card"><h2><span class="sym">🙅‍♀️</span> 싫어하는 것</h2><div class="chips"><span class="chip">공포&귀신 👻</span><span class="chip">잔인한거 ☠️</span><span class="chip">당근🥕</span></div></div>
+      <div class="card"><h2><span class="sym">🎨</span> 성격 & 방송 스타일</h2><ul class="body-list"><li>제로와 장난치고 티키타카하는 걸 좋아해요.</li><li>때때로 엉뚱, 허당 젤린이 튀어나와요.</li><li>표정으로 말하는 편, 알수없는 소리를 내는 편이예요.</li></ul></div>
+      <div class="card"><h2><span class="sym">🌠</span> 세계관</h2><p class="small" style="margin:0">우주 은하☆의 선택을 받은 마법소녀 지젤린. 별의 파편에 담긴 힘으로 지구를 지키며, 소중한 사람들과 행복한 일상을 만들어가고 있어요.</p></div>
+      <div class="card team-card"><div class="eyebrow">MY TEAM · GROUP PROFILE</div><h2><span class="sym">✦</span> 마이밀리밀키 <span class="english">MyMilliMilky</span></h2><p class="small" style="margin:0 0 13px">지젤린과 나루네가 함께하는 마법소녀 팀!<br>각자의 색으로 반짝이는 이야기를 만들어가요.</p><div class="team-facts"><div><span>멤버</span><strong>지젤린 · 나루네</strong></div><div><span>그룹 팬덤</span><strong>마이리 (Myri)</strong> | 마이밀리밀키랑 함께하는 별무리</div></div><p class="team-note">♡ 제로는 지젤린 개인 팬덤, 마이리는 팀 팬덤이에요.</p></div>
+    </section>
+
+    <section class="page" id="stream" aria-labelledby="stream-heading">
+      <div style="margin:3px 3px 19px"><div class="eyebrow">STREAM GUIDE</div><h1 id="stream-heading" style="font-size:26px;letter-spacing:-1px;margin:8px 0 5px">방송 안내</h1><p class="small muted" style="margin:0">지젤린의 방송을 편하게 즐기는 방법 ♡</p></div>
+      <div class="card"><h2><span class="sym">📺</span> 방송 일정</h2><p class="small muted" style="margin:0">최신 방송 일정은 아래 링크에서 확인해 주세요!</p><a href="#" class="action-link disabled" id="schedule-link" aria-disabled="true">이번 주 방송 일정 확인하기 <span>↗</span></a><p class="small muted" style="margin:10px 0 0"></p></div>
+      <div class="card"><h2><span class="sym">🕒</span> 방송 시간</h2><p class="small muted" style="margin:0"><strong>주 등장시간 : 평일 9시경🌃, 주말 아침/낮☀️</strong><br>방송 시간은 변동될 수 있어요. 정확한 시간은 최신 방송 일정에서 확인해 주세요.</p></div>
+      <div class="card"><h2><span class="sym">🔎</span> 주요 콘텐츠</h2><div class="content-list"><div><b>저스트 채팅</b><span>일상 이야기와 편안한 대화</span></div><div><b>사주 상담소</b><span>재미있고 쉽게 풀어보는 사주</span></div><div><b>게임</b><span>다양한 게임 플레이(종합게임)</span></div><div><b>합동 방송</b><span>팀원과 함께하는 콘텐츠</span></div></div></div>
+      <div class="card"><h2><span class="sym">✨</span> 방송 규칙</h2><ul class="body-list"><li>제로들끼리 서로 대화는 금지해요.</li><li>타 스트리머나 멤버 언급은 삼가 주세요.</li><li>심한 욕설, 비하, 혐오 발언, 민감한 소재는 언급 금지해요.</li><li>주제와 관련 없는 TMI 및 도배 금지해요.</li><li>서로 존중하고 편안하게 이야기해요. ♡</li></ul><p class="small muted" style="margin:12px 0 0"></p></div>
+      <div class="card"><h2><span class="sym">😎</span> 자주 묻는 질문 (FAQ)</h2><details><summary>방송은 언제 하나요?</summary><p>최신 방송 스케줄 링크에서 확인해 주세요!</p></details><details><summary>주로 무슨 방송을 하나요?</summary><p>저스트 채팅, 사주 상담소, 게임 등을 진행해요.</p></details><details><summary>사주 상담은 어떻게 신청하나요?</summary><p>사주 관련 공지는 방송과 커뮤니티에서 확인해 주세요. 신청 방식은 추후 확정할 예정이에요.</p></details><details><summary>다시보기는 어디서 보나요?</summary><p>지젤린 유튜브에서 확인할 수 있습니다. ♡</p></details></div>
+      <div class="card"><h2><span class="sym">♡</span> 처음 오신 분들에게</h2><p class="small" style="margin:0;line-height:2">편하게 인사하고 자유롭게 얘기 나눠요!<br>궁금한 점은 언제든지 물어봐 주세요.<br>우리 함께 즐겁고 포근한 방송 만들어요. ♡</p></div>
+    </section>
+
+    <section class="page" id="gallery" aria-labelledby="gallery-heading">
+      <div class="gallery-head"><div><div class="eyebrow">PHOTO ALBUM</div><h1 id="gallery-heading">사진첩</h1></div><span id="photo-count">0장</span></div>
+      <div class="gallery-grid" id="gallery-grid"></div>
+      <p class="gallery-note">사진을 누르면 앱 안에서 크게 볼 수 있어요. </p>
+    </section>
+    <footer>© GISELLINE · MADE WITH ♡</footer>
+  </main>
+</div>
+<nav class="tabbar" aria-label="하단 메뉴" inert>
+  <button class="tab active" data-tab="home" aria-current="page"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>홈</button>
+  <button class="tab" data-tab="profile"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></svg>프로필</button>
+  <button class="tab" data-tab="stream"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="m8 3 4 4 4-4"/><circle cx="12" cy="13" r="2"/></svg>방송 안내</button>
+  <button class="tab" data-tab="gallery"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 3-3 6 6"/></svg>사진첩</button>
+</nav>
+<div class="overlay" id="viewer" role="dialog" aria-modal="true" aria-label="사진 보기" aria-hidden="true">
+  <div class="viewer-header"><button id="close-viewer" aria-label="닫기">×</button><span id="viewer-index">1 / 1</span><span style="width:39px"></span></div>
+  <div class="viewer-stage" id="viewer-stage"><button id="previous-photo" aria-label="이전 사진">‹</button><div class="viewer-picture" id="viewer-picture"></div><button id="next-photo" aria-label="다음 사진">›</button></div>
+  <div class="viewer-caption"><div id="viewer-title">이미지</div><small id="viewer-subtitle">사진 보기</small></div>
+</div>
+<script>
+  // 수정이 필요한 정보는 이곳에서 관리하세요. 실제 주소를 입력하면 링크가 활성화됩니다.
+  const SITE_CONFIG = {
+    links: [
+      {name:'치지직', url:''},
+      {name:'유튜브', url:''},
+      {name:'X (트위터)', url:''},
+      {name:'네이버 카페', url:''}
+    ],
+    scheduleUrl: '',
+    // 갤러리 이미지 예시: {src:'assets/gallery/photo01.png', title:'새 의상', caption:'2026.11 공개'}
+    // 지금은 이미지가 없으므로 시연용 회색 자리 12칸이 보입니다.
+    gallery: []
+  };
+
+  const pageNames = {home:'HOME',profile:'PROFILE',stream:'STREAM GUIDE',gallery:'GALLERY'};
+  let currentTab = 'home';
+  const pages = document.querySelectorAll('.page');
+  const tabs = document.querySelectorAll('[data-tab]');
+  function showTab(tab, updateHash=true) {
+    if (!pageNames[tab]) tab='home';
+    currentTab=tab;
+    pages.forEach(p=>p.classList.toggle('active',p.id===tab));
+    tabs.forEach(b=>{const on=b.dataset.tab===tab; b.classList.toggle('active',on); if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
+    const pageLabel=document.getElementById('page-label');if(pageLabel)pageLabel.textContent=pageNames[tab];
+    window.scrollTo({top:0,behavior:'instant'});
+    if(updateHash && location.hash!==`#${tab}`) location.hash=tab;
+  }
+  tabs.forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+  document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.goto)));
+  window.addEventListener('hashchange',()=>showTab(location.hash.substring(1),false));
+  showTab(location.hash.substring(1)||'home',false);
+
+  const debut = new Date('2026-10-03T00:00:00+09:00');
+  const dayMs=86400000;
+  // KST 기준 날짜를 사용해 한국 사용자의 날짜 전환 기준을 유지합니다.
+  const kstParts=Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).filter(p=>p.type!=='literal').map(p=>[p.type,p.value]));
+  const koreanDate=`${kstParts.year}-${kstParts.month}-${kstParts.day}`;
+  const days=Math.floor((Date.parse(`${koreanDate}T00:00:00Z`)-Date.parse('2026-10-03T00:00:00Z'))/dayMs)+1;
+  document.getElementById('debut-counter').textContent=days>0?`D+${days}`:'COMING SOON';
+
+  const validUrl=u=>{try {const x=new URL(u);return ['http:','https:'].includes(x.protocol)} catch{return false}};
+  const linkArea=document.getElementById('social-links');
+  SITE_CONFIG.links.forEach(item=>{
+    const a=document.createElement('a');a.className='link-card';a.textContent=item.name;const arrow=document.createElement('span');arrow.textContent='↗';a.append(arrow);
+    if(validUrl(item.url)){a.href=item.url;a.target='_blank';a.rel='noopener noreferrer';}else{a.href='#';a.setAttribute('aria-disabled','true');a.title='링크 준비 중';a.addEventListener('click',e=>e.preventDefault());}linkArea.append(a);
+  });
+  const scheduleLink=document.getElementById('schedule-link');
+  if(validUrl(SITE_CONFIG.scheduleUrl)){scheduleLink.href=SITE_CONFIG.scheduleUrl;scheduleLink.target='_blank';scheduleLink.rel='noopener noreferrer';scheduleLink.classList.remove('disabled');scheduleLink.removeAttribute('aria-disabled');}else{scheduleLink.addEventListener('click',e=>e.preventDefault());}
+
+  const photoIcon='<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="6" y="9" width="36" height="30" rx="4"/><circle cx="17" cy="19" r="3"/><path d="m7 34 12-11 8 7 5-5 9 8"/></svg>';
+  const photos=SITE_CONFIG.gallery.length?SITE_CONFIG.gallery:Array.from({length:12},(_,i)=>({src:'',title:`사진 ${i+1}`,caption:'이미지 추가 예정'}));
+  const grid=document.getElementById('gallery-grid');
+  document.getElementById('photo-count').textContent=SITE_CONFIG.gallery.length?`${SITE_CONFIG.gallery.length}장`:'이미지 준비 중';
+  photos.forEach((p,i)=>{
+    const b=document.createElement('button');b.type='button';b.className='photo';b.setAttribute('aria-label',`${p.title} 크게 보기`);
+    if(p.src){const im=document.createElement('img');im.src=p.src;im.alt=p.title;im.loading='lazy';im.onerror=()=>{im.remove();b.innerHTML=photoIcon};b.append(im)}else{b.innerHTML=photoIcon;}
+    b.addEventListener('click',()=>openViewer(i));grid.append(b);
+  });
+  const viewer=document.getElementById('viewer');const picture=document.getElementById('viewer-picture');const closeBtn=document.getElementById('close-viewer');
+  let index=0;let previousFocus=null;
+  function renderViewer(){const p=photos[index];document.getElementById('viewer-index').textContent=`${index+1} / ${photos.length}`;document.getElementById('viewer-title').textContent=p.title||'사진';document.getElementById('viewer-subtitle').textContent=p.caption||'';picture.replaceChildren();if(p.src){const im=document.createElement('img');im.src=p.src;im.alt=p.title||'갤러리 사진';im.onerror=()=>{picture.innerHTML=photoIcon};picture.append(im)}else{picture.innerHTML=photoIcon;}}
+  function openViewer(i){index=i;previousFocus=document.activeElement;renderViewer();viewer.classList.add('open');viewer.setAttribute('aria-hidden','false');document.body.classList.add('viewer-open');document.body.style.overflow='hidden';closeBtn.focus();}
+  function closeViewer(){viewer.classList.remove('open');viewer.setAttribute('aria-hidden','true');document.body.classList.remove('viewer-open');document.body.style.overflow='';previousFocus?.focus();}
+  function nextPhoto(step){index=(index+step+photos.length)%photos.length;renderViewer();}
+  closeBtn.addEventListener('click',closeViewer);
+  document.getElementById('previous-photo').addEventListener('click',()=>nextPhoto(-1));
+  document.getElementById('next-photo').addEventListener('click',()=>nextPhoto(1));
+  viewer.addEventListener('click',e=>{if(e.target===viewer)closeViewer();});
+  document.addEventListener('keydown',e=>{if(!viewer.classList.contains('open'))return;if(e.key==='Escape')closeViewer();if(e.key==='ArrowLeft')nextPhoto(-1);if(e.key==='ArrowRight')nextPhoto(1);if(e.key==='Tab'){const controls=[closeBtn,document.getElementById('previous-photo'),document.getElementById('next-photo')];const n=controls.indexOf(document.activeElement);if(e.shiftKey&&n===0){controls.at(-1).focus();e.preventDefault()}else if(!e.shiftKey&&n===controls.length-1){controls[0].focus();e.preventDefault()}}});
+  let startX=0;const stage=document.getElementById('viewer-stage');stage.addEventListener('touchstart',e=>{startX=e.changedTouches[0].clientX},{passive:true});stage.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>55)nextPhoto(dx<0?1:-1)},{passive:true});
+</script>
+<!-- 홈페이지 준비중 화면 -->
+<div id="coming-soon">
+  <div class="coming-soon-text">~준비중~</div>
+</div>
+</body>
+</html>
